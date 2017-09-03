@@ -7,7 +7,7 @@ and their analysis.
 
 The major subprojects (subdirectories are):
 
-  * pi3-buildroot - Buildroot configuration for Raspberry Pi 3,
+  * pi3br - Buildroot configuration for Raspberry Pi 3,
     which serves as the host data logger running "tcpdump".
     The "tcpdump" utility may be replaced later by a real-time logger
     which is tailored to specific needs of the overall project.

@@ -1,4 +1,4 @@
-# pi3-buildroot
+# pi3br
 
 This subproject specifies the configuration and other components
 needed to create a Buildroot image for the Raspberry Pi 3.
