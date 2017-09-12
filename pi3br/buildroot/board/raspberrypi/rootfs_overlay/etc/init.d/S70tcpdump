@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# if mount fails, something is wrong in earlier step.
+if ! mount | grep -q "mmcblk0p3" ; then
+  echo -e "missing mmcblk0p3; cannot run tcpdump -W -C"
+  exit 1
+fi
+# If we get here, /mnt/data should be mounted on /dev/mmcblk03
+df -k | grep mmc  # show us!
+
+/sbin/ifconfig eth0 192.168.1.150 up
+sleep 2
+
+# generate new genration number
+cd /mnt/data
+if [ -e gen.asc ]; then
+  printf "%02d" $(expr $(cat gen.asc) + 1) > gen.asc ; cat gen.asc
+else
+  echo 00 > gen.asc
+fi
+GEN=$(cat gen.asc)
+
+# tcpdump limit to 20 MB, 250 files => 5 GB
+/usr/sbin/tcpdump -i eth0 udp -C 20 -W 250 -w /mnt/data/daqlog${GEN} &
+

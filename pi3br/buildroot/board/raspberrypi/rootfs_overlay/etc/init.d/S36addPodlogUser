@@ -1,0 +1,15 @@
+#!/bin/sh
+# S36addPodLogUser
+
+# depends on /dev/mmcblkp03 being mounted
+if ! mount | grep -q "mmcblk0p3" ; then
+  echo mmcblk0p3 not yet mounted, do not add podlog user yet
+  exit 0
+fi
+
+if ! grep -q podlog /etc/passwd ; then
+  [ -d /local ] || mkdir /local
+  adduser -h /local/podlog -u 1010 -G users -D podlog # no password
+  # don't want random password; would be nice to add specific one.
+fi
+
